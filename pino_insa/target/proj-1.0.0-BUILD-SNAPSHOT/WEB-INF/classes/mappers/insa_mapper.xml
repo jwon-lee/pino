@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="InsaDAO">
+
+	<select id="SQL_SHOW_ALL_INSA_INFOMATION" parameterType="searchVO" resultType="insaVO">
+			SELECT *
+			FROM (SELECT A.*,
+			          ROWNUM AS RNUM,
+			          COUNT(*) OVER() AS TOTCNT
+			      FROM (SELECT *
+			            FROM insa
+			            <trim prefix="WHERE" prefixOverrides="AND|OR" >
+							<if test='(sabun != null || sabun != "") and sabun != "%"'>
+								AND sabun LIKE '%' || #{sabun} || '%'
+							</if>
+							<if test='(name != null || name != "") and name != "%"'>
+								AND name LIKE '%' || #{name} || '%'
+							</if>
+							<if test='(joinGbnCode != null || joinGbnCode != "") and joinGbnCode != "%"'>
+								AND join_gbn_code LIKE '%' || #{joinGbnCode} || '%'
+							</if>
+							<if test='(putYn != null || putYn != "") and putYn != "%"'>
+								AND put_yn LIKE '%' || #{putYn} || '%'
+							</if>
+							<if test='(posGbnCode != null || posGbnCode != "") and posGbnCode != "%"'>
+								AND pos_gbn_code LIKE '%' || #{posGbnCode} || '%'
+							</if>
+							<if test='(joinDate != null || joinDate != "") and joinDate != "%"'>
+								AND join_date LIKE '%' || #{joinDate} || '%'
+							</if>
+							<if test='joinDate == null || joinDate == "" || joinDate == "%"'>
+								AND (join_date LIKE '%' OR join_date is NULL)
+							</if>
+							<if test='(retireDate != null || retireDate != "") and retireDate != "%"'>
+								AND retire_date LIKE '%' || #{retireDate} || '%'
+							</if>
+							<if test='retireDate == null || retireDate == "" || retireDate == "%"'>
+								AND (retire_date LIKE '%' OR retire_date is NULL)
+							</if>
+							<if test='(jobType != null || jobType != "") and jobType != "%"'>
+								AND job_type LIKE '%' || #{jobType} || '%'
+							</if>
+					</trim>
+			            ORDER BY sabun desc) A
+			     )
+			<![CDATA[WHERE RNUM >= #{pn} AND RNUM <= #{offset}]]>
+			
+	</select>
+	
+	<sql id="search">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="sabun != null || sabun != ''">
+				AND sabun LIKE '%' || #{sabun} || '%'
+			</if>
+			AND rownum BETWEEN #{pn} AND #{offset}			
+		</trim>
+		
+	</sql>
+	
+	<select id="SQL_INSA_COUNT" parameterType="searchVO" resultType="int">
+<!-- 		SELECT count(*) -->
+<!-- 		FROM insa -->
+			SELECT count(*)
+			FROM (SELECT A.*,
+			          ROWNUM AS RNUM,
+			          COUNT(*) OVER() AS TOTCNT
+			      FROM (SELECT *
+			            FROM insa
+			            <trim prefix="WHERE" prefixOverrides="AND|OR" >
+							<if test='(sabun != null || sabun != "") and sabun != "%"'>
+								AND sabun LIKE '%' || #{sabun} || '%'
+							</if>
+							<if test='(name != null || name != "") and name != "%"'>
+								AND name LIKE '%' || #{name} || '%'
+							</if>
+							<if test='(joinGbnCode != null || joinGbnCode != "") and joinGbnCode != "%"'>
+								AND join_gbn_code LIKE '%' || #{joinGbnCode} || '%'
+							</if>
+							<if test='(putYn != null || putYn != "") and putYn != "%"'>
+								AND put_yn LIKE '%' || #{putYn} || '%'
+							</if>
+							<if test='(posGbnCode != null || posGbnCode != "") and posGbnCode != "%"'>
+								AND pos_gbn_code LIKE '%' || #{posGbnCode} || '%'
+							</if>
+							<if test='(joinDate != null || joinDate != "") and joinDate != "%"'>
+								AND join_date LIKE '%' || #{joinDate} || '%'
+							</if>
+							<if test='joinDate == null || joinDate == "" || joinDate == "%"'>
+								AND (join_date LIKE '%' OR join_date is NULL)
+							</if>
+							<if test='(retireDate != null || retireDate != "") and retireDate != "%"'>
+								AND retire_date LIKE '%' || #{retireDate} || '%'
+							</if>
+							<if test='retireDate == null || retireDate == "" || retireDate == "%"'>
+								AND (retire_date LIKE '%' OR retire_date is NULL)
+							</if>
+							<if test='(jobType != null || jobType != "") and jobType != "%"'>
+								AND job_type LIKE '%' || #{jobType} || '%'
+							</if>
+						</trim>
+			            ORDER BY sabun desc) A
+			     )
+<!-- 				<![CDATA[AND RNUM >= #{pn} AND RNUM <= #{offset}]]> -->
+	</select>
+	
+	<select id="SQL_SHOW_ONE_INSA_DETAIL_SABUN" parameterType="int" resultType="insaVO">
+		<![CDATA[
+ 			SELECT *
+ 			FROM insa
+ 			WHERE sabun = #{sabun}
+ 		]]>
+	</select>
+	
+	<select id="SQL_SHOW_ONE_INSA_DETAIL_USERID" parameterType="string" resultType="insaVO">
+		<![CDATA[
+ 			SELECT *
+ 			FROM insa
+ 			WHERE id = #{userId}
+ 		]]>
+	</select>
+	
+	<select id="SQL_SHOW_COM" parameterType="string" resultType="insacomVO">
+		<![CDATA[
+			SELECT *
+			FROM insa_com
+			WHERE gubun = #{gubun}
+			ORDER BY code ASC
+		]]>
+	</select>
+	
+	<select id="SQL_SHOW_INSA_COUNT" parameterType="string" resultType="int">
+		<![CDATA[
+			SELECT count(*)
+			FROM insa
+			WHERE id = #{userId}
+		]]>
+	</select>
+
+	<insert id="SQL_INSERT_INSA_INFOMATION" parameterType="insaVO">
+		<selectKey keyProperty="sabun" resultType="int" order="BEFORE">
+			<![CDATA[
+ 				SELECT AUTO_SABUN.nextval
+ 				FROM DUAL
+ 			]]>
+		</selectKey>
+		<![CDATA[
+			INSERT INTO insa VALUES (
+				#{sabun}
+				, #{joinDate}
+				, #{retireDate}
+				, #{putYn}
+				, #{name}
+				, #{regNo}
+				, #{engName}
+				, #{phone}
+				, #{hp}
+				, #{carrier}
+				, #{posGbnCode}
+				, #{cmpRegNo}
+				, #{cmpRegImage}
+				, #{sex}
+				, #{years}
+				, #{email}
+				, #{zip}
+				, #{addr1}
+				, #{addr2}
+				, #{deptCode}
+				, #{joinGbnCode}
+				, #{id}
+				, #{pwd}
+				, #{salary}
+				, #{kosaRegYn}
+				, #{kosaClassCode}
+				, #{milYn}
+				, #{milType}
+				, #{milLevel}
+				, #{milStartDate}
+				, #{milEndDate}
+				, #{jobType}
+				, #{gartLevel}
+				, #{selfIntro}
+				, #{crmName}
+				, #{profile}
+			)
+		]]>
+	</insert>
+
+	<update id="SQL_UPDATE_INSA_INFOMATION" parameterType="insaVO">
+		<![CDATA[
+			UPDATE insa
+			SET join_date = #{joinDate}
+				, retire_date = #{retireDate}
+				, put_yn =        #{putYn}
+				, name =         #{name}
+				, reg_no =        #{regNo}
+				, eng_name =      #{engName}
+				, phone =        #{phone}
+				, hp =           #{hp}
+				, carrier =      #{carrier}
+				, pos_gbn_code =   #{posGbnCode}
+				, cmp_reg_no =     #{cmpRegNo}
+				, cmp_reg_image =  #{cmpRegImage}
+				, sex =          #{sex}
+				, years =        #{years}
+				, email =        #{email}
+				, zip =          #{zip}
+				, addr1 =        #{addr1}
+				, addr2 =        #{addr2}
+				, dept_code =     #{deptCode}
+				, join_gbn_code =  #{joinGbnCode}
+				, id =           #{id}
+				, pwd =          #{pwd}
+				, salary =       #{salary}
+				, kosa_reg_yn =    #{kosaRegYn}
+				, kosa_class_code = #{kosaClassCode}
+				, mil_yn =        #{milYn}
+				, mil_type =      #{milType}
+				, mil_level =     #{milLevel}
+				, mil_start_date = #{milStartDate}
+				, mil_end_date =   #{milEndDate}
+				, job_type =      #{jobType}
+				, gart_level =    #{gartLevel}
+				, self_intro =    #{selfIntro}
+				, crm_name =      #{crmName}
+				, profile =      #{profile}
+			WHERE sabun = #{sabun}
+		]]>
+	</update>
+	
+	<delete id="SQL_DELETE_INSA_INFOMATION" parameterType="int">
+		<![CDATA[
+			DELETE FROM insa WHERE sabun = #{sabun}
+		]]>
+	</delete>
+
+</mapper>
