@@ -1,0 +1,217 @@
+
+/*
+drop table insa_acad_ability;
+drop table insa_carrier;
+drop table insa_com;
+drop table insa_input_info;
+drop table insa;
+
+
+create table insa(
+    sabun number primary key 
+    , join_date date
+	, retire_date date
+	, put_yn varchar2(512)
+	, name varchar2(512) not null
+	, reg_no varchar2(512)
+	, eng_name varchar2(512)
+	, phone varchar2(512)
+	, hp varchar2(512) not null
+	, carrier varchar2(512)
+	, pos_gbn_code varchar2(512)
+	, cmp_reg_no varchar2(512)
+	, cmp_reg_image varchar2(512)
+	, sex varchar2(512)
+	, years number
+	, email varchar2(512) not null
+    , zip number
+	, addr1 varchar2(512)
+	, addr2 varchar2(512)
+	, dept_code varchar2(512)
+	, join_gbn_code varchar2(512)
+	, id varchar2(512) not null
+	, pwd varchar2(512) not null
+	, salary number
+	, kosa_reg_yn varchar2(512)
+    , kosa_class_code varchar2(512)
+	, mil_yn varchar2(512)
+	, mil_type varchar2(512)
+	, mil_level varchar2(512)
+	, mil_start_date varchar2(512)
+	, mil_end_date varchar2(512)
+	, job_type varchar2(512)
+	, gart_level varchar2(512)
+	, self_intro varchar2(512)
+	, crm_name varchar2(512)
+	, profile varchar2(512)
+);
+
+
+
+
+COMMENT ON COLUMN insa.sabun IS '사번';
+COMMENT ON COLUMN insa.join_date IS '입사일';
+COMMENT ON COLUMN insa.retire_date IS '퇴사일';
+COMMENT ON COLUMN insa.put_yn IS '투입여부';
+COMMENT ON COLUMN insa.name IS '이름';
+COMMENT ON COLUMN insa.reg_no IS '주민등록번호';
+COMMENT ON COLUMN insa.eng_name IS '영어이름';
+COMMENT ON COLUMN insa.phone IS '전화번호';
+COMMENT ON COLUMN insa.hp IS '핸드폰번호';
+COMMENT ON COLUMN insa.carrier IS '이력서';
+COMMENT ON COLUMN insa.pos_gbn_code IS '직위구분코드';
+COMMENT ON COLUMN insa.cmp_reg_no IS '사업자등록번호';
+COMMENT ON COLUMN insa.cmp_reg_image IS '사업자등록증';
+COMMENT ON COLUMN insa.sex IS '성별';
+COMMENT ON COLUMN insa.years IS '나이';
+COMMENT ON COLUMN insa.email IS '이메일';
+COMMENT ON COLUMN insa.zip IS '우편번호';
+COMMENT ON COLUMN insa.addr1 IS '주소1(도-리 주소)';
+COMMENT ON COLUMN insa.addr2 IS '주소2(세부주소)';
+COMMENT ON COLUMN insa.dept_code IS '부서코드';
+COMMENT ON COLUMN insa.join_gbn_code IS '직종';
+COMMENT ON COLUMN insa.id IS '아이디';
+COMMENT ON COLUMN insa.pwd IS '패스워드';
+COMMENT ON COLUMN insa.salary IS '연봉';
+COMMENT ON COLUMN insa.kosa_reg_yn IS 'KOSA등록';
+COMMENT ON COLUMN insa.kosa_class_code IS 'KOSA등급';
+COMMENT ON COLUMN insa.mil_yn IS '입대여부';
+COMMENT ON COLUMN insa.mil_type IS '군별';
+COMMENT ON COLUMN insa.mil_level IS '계급';
+COMMENT ON COLUMN insa.mil_start_date IS '입영일자';
+COMMENT ON COLUMN insa.mil_end_date IS '전역일자';
+COMMENT ON COLUMN insa.job_type IS '직종체크';
+COMMENT ON COLUMN insa.gart_level IS '등급';
+COMMENT ON COLUMN insa.self_intro IS '자기소개';
+COMMENT ON COLUMN insa.crm_name IS '업체';
+COMMENT ON COLUMN insa.profile IS '프로필';
+
+create table insa_com(
+    gubun varchar2(512)
+    , code varchar2(512)
+    , name varchar2(512)
+    , note varchar2(512)
+    , CONSTRAINT insa_com_pk PRIMARY KEY(gubun, code)
+);
+
+
+COMMENT ON COLUMN insa_com.gubun IS '구분';
+COMMENT ON COLUMN insa_com.code IS '코드';
+COMMENT ON COLUMN insa_com.name IS '이름';
+COMMENT ON COLUMN insa_com.note IS '비고';
+
+
+create table insa_input_info(
+    sabun number
+    , seq number
+    , wrk_posb_day date
+    , sugst_money number
+    , pjt_gbn_code varchar2(512)
+    , eqm_yn varchar2(512)
+    , current_salary number
+    , work_area varchar2(512)
+    , constraint insa_input_info_pk primary key (seq)
+    , constraint insa_fk foreign key (sabun)
+     references insa (sabun)
+);
+
+comment on column insa_input_info.sabun is  '사번';
+comment on column insa_input_info.seq is  '일련번호';
+comment on column insa_input_info.wrk_posb_day is  '근무가능일';
+comment on column insa_input_info.sugst_money is  '월제시금액';
+comment on column insa_input_info.pjt_gbn_code is  'pj형태구분코드';
+comment on column insa_input_info.eqm_yn is  '장비유무';
+comment on column insa_input_info.current_salary is '현재연봉';
+comment on column insa_input_info.work_area is '근무지';
+
+create table insa_acad_ability (
+    sabun number
+    , seq number
+    , major_stud_gbn varchar2(512)
+    , gart_level varchar2(512)
+    , gart_year number
+    , gart_month number
+    , school_name varchar2(512)
+    , constraint insa_acad_ability_pk primary key (seq)
+    , constraint insa_fk_a foreign key (sabun) references insa (sabun)
+);
+
+comment on column insa_acad_ability.sabun is  '사번';
+comment on column insa_acad_ability.seq is  '일련번호';
+comment on column insa_acad_ability.major_stud_gbn is  '전공구분';
+comment on column insa_acad_ability.gart_level is  '졸업여부';
+comment on column insa_acad_ability.gart_year is  '졸업년';
+comment on column insa_acad_ability.gart_month is  '졸업월';
+comment on column insa_acad_ability.school_name is '학교명';
+
+create table insa_carrier (
+    sabun number
+    , seq number
+    , cmp_name_carrier varchar2(512)
+    , work_start_day date
+    , work_end_daty date
+    , pos_gbn_code varchar2(512)
+    , respon_dept varchar2(512)
+    , work_contents varchar2(512)
+    , constraint insa_carrier_pk primary key (seq)
+    , constraint insa_fk_c foreign key (sabun) references insa (sabun)
+);
+
+comment on column insa_carrier.sabun is '사번';
+comment on column insa_carrier.seq is '일련번호';
+comment on column insa_carrier.cmp_name_carrier is '회사명';
+comment on column insa_carrier.work_start_day is '근무시작일';
+comment on column insa_carrier.work_end_daty is '근무종료일';
+comment on column insa_carrier.pos_gbn_code is '직위';
+comment on column insa_carrier.respon_dept is '담당업무';
+comment on column insa_carrier.work_contents is '근무내용';
+
+*/
+
+insert into insa_com values ('email2', 'naver', '@naver.com', '네이버');
+insert into insa_com values ('email2', 'google', '@gmail.com', '지메일');
+insert into insa_com values ('email2', 'nate', '@nate.com', '네이트');
+insert into insa_com values ('email2', 'daum', '@hanmail.net', '한메일');
+insert into insa_com values ('job_type', '영업', '영업', '영업');
+insert into insa_com values ('job_type', '개발', '개발', '개발');
+insert into insa_com values ('job_type', '연구', '연구', '연구');
+insert into insa_com values ('sex', '남자', '남자', '남자');
+insert into insa_com values ('sex', '여자', '여자', '여자');
+insert into insa_com values ('pos_gbn', '사원', '사원', '사원');
+insert into insa_com values ('pos_gbn', '주임', '주임', '주임');
+insert into insa_com values ('pos_gbn', '대리', '대리', '대리');
+insert into insa_com values ('pos_gbn', '과장', '과장', '과장');
+insert into insa_com values ('pos_gbn', '차장', '차장', '차장');
+insert into insa_com values ('pos_gbn', '부장', '부장', '부장');
+insert into insa_com values ('dept', 'SI사업', 'SI사업', 'SI사업');
+insert into insa_com values ('dept', '개발', '개발', '개발');
+insert into insa_com values ('dept', '관리', '관리', '관리');
+insert into insa_com values ('join_yn', 'Y', 'Y', 'Y');
+insert into insa_com values ('join_yn', 'N', 'N', 'N');
+insert into insa_com values ('gart_level', '고졸', '고졸', '고졸');
+insert into insa_com values ('gart_level', '초대졸', '초대졸', '초대졸');
+insert into insa_com values ('gart_level', '대졸', '대졸', '대졸');
+insert into insa_com values ('put_yn', 'Y', 'Y', 'Y');
+insert into insa_com values ('put_yn', 'N', 'N', 'N');
+insert into insa_com values ('mil_yn', 'Y', 'Y', 'Y');
+insert into insa_com values ('mil_yn', 'N', 'N', 'N');
+insert into insa_com values ('mil_type', '육군', '육군', '육군');
+insert into insa_com values ('mil_type', '해군', '해군', '해군');
+insert into insa_com values ('mil_type', '공군', '공군', '공군');
+insert into insa_com values ('mil_type', '해병', '해병', '해병');
+insert into insa_com values ('mil_level', '이병', '이병', '이병');
+insert into insa_com values ('mil_level', '일병', '일병', '일병');
+insert into insa_com values ('mil_level', '상병', '상병', '상병');
+insert into insa_com values ('mil_level', '병장', '병장', '병장');
+insert into insa_com values ('kosa_yn', 'Y', 'Y', 'Y');
+insert into insa_com values ('kosa_yn', 'N', 'N', 'N');
+insert into insa_com values ('kosa_class', '초급', '초급', '초급');
+insert into insa_com values ('kosa_class', '중급', '중급', '중급');
+insert into insa_com values ('kosa_class', '고급', '고급', '고급');
+
+
+
+
+
+
+테스트
