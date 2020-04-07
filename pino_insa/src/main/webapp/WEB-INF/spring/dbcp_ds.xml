@@ -13,7 +13,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 <!-- 	<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource"> -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:lee"/>
 		<property name="username" value="lee"/>
 		<property name="password" value="lee"/>
 <!-- 		<property name="maxActive" value="100"/> -->

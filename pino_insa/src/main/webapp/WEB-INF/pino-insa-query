@@ -1,5 +1,5 @@
 
-/*
+
 drop table insa_acad_ability;
 drop table insa_carrier;
 drop table insa_com;
@@ -166,7 +166,7 @@ comment on column insa_carrier.pos_gbn_code is '직위';
 comment on column insa_carrier.respon_dept is '담당업무';
 comment on column insa_carrier.work_contents is '근무내용';
 
-*/
+
 
 insert into insa_com values ('email2', 'naver', '@naver.com', '네이버');
 insert into insa_com values ('email2', 'google', '@gmail.com', '지메일');
