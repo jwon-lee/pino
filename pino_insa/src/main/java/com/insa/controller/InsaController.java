@@ -389,14 +389,6 @@ public class InsaController {
 		System.out.println("carrierReg : " + carrier_reg + "\n, crrPath : " + crrPath);
 		System.out.println("imgUpload : " + img_upload + "\n, prfPath : " + prfPath);
 		
-		//korName : 이장원, engName : leejangwon, userId : test1, pwd : test, tel : 041-834-6944
-		// , hp : 010-7332-6944, regNo : 910710-1457151, email : asdf@naver.com, jobType : 개발
-		// , sex : 남자, addr1 : 제주특별자치도 서귀포시 가가로 14, addr2 : 34341, posGbn : 사원, dept : 개발
-		// , joinGbn : YgartLevel : 대졸, putYn : N, milYn : Y, milType : 공군, milLevel : 병장
-		// , milStartDate : 2010-08-30, milEndDate : 2012-09-04, kosaReg : N, kosaClass : 초급
-		// , joinDate : 2019-09-17, endDate : , cmpNo : 121-23-12345, cmpName : 피노소프트, cmpImg : null
-		// , cmpReg : , selfIntro : ㅇ, carrier : null, carrierReg :
-		
 		System.out.println("korName : " + korName + ", engName : " + engName + ", userId : " + userId + ", pwd : " + pwd +
 				", tel : " + tel + ", hp : " + hp + ", regNo : " + regNo + ", email : " + email + ", jobType : " + jobType + ", sex : " + 
 				sex + ", addr1 : " + addr1 + ", addr2 : " + addr2 + ", posGbn : " + posGbn + ", dept : " + dept + ", joinGbn : " + joinGbn
@@ -728,14 +720,6 @@ public class InsaController {
 //		}else {
 //			email = email1 + email2;
 //		}
-		
-		//korName : 이장원, engName : leejangwon, userId : test1, pwd : test, tel : 041-834-6944
-		// , hp : 010-7332-6944, regNo : 910710-1457151, email : asdf@naver.com, jobType : 개발
-		// , sex : 남자, addr1 : 제주특별자치도 서귀포시 가가로 14, addr2 : 34341, posGbn : 사원, dept : 개발
-		// , joinGbn : YgartLevel : 대졸, putYn : N, milYn : Y, milType : 공군, milLevel : 병장
-		// , milStartDate : 2010-08-30, milEndDate : 2012-09-04, kosaReg : N, kosaClass : 초급
-		// , joinDate : 2019-09-17, endDate : , cmpNo : 121-23-12345, cmpName : 피노소프트, cmpImg : null
-		// , cmpReg : , selfIntro : ㅇ, carrier : null, carrierReg :
 		
 		System.out.println("korName : " + korName + ", engName : " + engName + ", userId : " + userId + ", pwd : " + pwd +
 				", tel : " + tel + ", hp : " + hp + ", regNo : " + regNo + ", email : " + email + ", jobType : " + jobType + ", sex : " + 
